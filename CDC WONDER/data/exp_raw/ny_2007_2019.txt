@@ -1,0 +1,106 @@
+"Notes"	"State"	"State Code"	"County"	"County Code"	Births	Total Population	Birth Rate	Average Birth Weight
+	"New York"	"36"	"Albany County, NY"	"36001"	39757	3981132	9.99	3298.80
+	"New York"	"36"	"Bronx County, NY"	"36005"	280749	18368943	15.28	3197.47
+	"New York"	"36"	"Broome County, NY"	"36007"	26430	2563102	10.31	3306.45
+	"New York"	"36"	"Chautauqua County, NY"	"36013"	18235	1718023	10.61	3287.16
+	"New York"	"36"	"Dutchess County, NY"	"36027"	35536	3848508	9.23	3326.10
+	"New York"	"36"	"Erie County, NY"	"36029"	128530	11968220	10.74	3275.59
+	"New York"	"36"	"Jefferson County, NY"	"36045"	26430	1505540	17.56	3343.38
+	"New York"	"36"	"Kings County, NY"	"36047"	532784	33263747	16.02	3235.76
+	"New York"	"36"	"Monroe County, NY"	"36055"	107820	9690111	11.13	3288.67
+	"New York"	"36"	"Nassau County, NY"	"36059"	186294	17530870	10.63	3269.39
+	"New York"	"36"	"New York County, NY"	"36061"	244766	21031579	11.64	3228.00
+	"New York"	"36"	"Niagara County, NY"	"36063"	28199	2778457	10.15	3286.23
+	"New York"	"36"	"Oneida County, NY"	"36065"	33397	3026036	11.04	3308.47
+	"New York"	"36"	"Onondaga County, NY"	"36067"	69039	6050205	11.41	3316.15
+	"New York"	"36"	"Ontario County, NY"	"36069"	13416	1411446	9.51	3366.67
+	"New York"	"36"	"Orange County, NY"	"36071"	66346	4890606	13.57	3308.65
+	"New York"	"36"	"Oswego County, NY"	"36075"	17035	1567382	10.87	3352.72
+	"New York"	"36"	"Queens County, NY"	"36081"	390625	29520786	13.23	3225.03
+	"New York"	"36"	"Rensselaer County, NY"	"36083"	22025	2072969	10.62	3328.86
+	"New York"	"36"	"Richmond County, NY"	"36085"	71626	6128486	11.69	3259.84
+	"New York"	"36"	"Rockland County, NY"	"36087"	67747	4138273	16.37	3322.52
+	"New York"	"36"	"St. Lawrence County, NY"	"36089"	15046	1441123	10.44	3337.79
+	"New York"	"36"	"Saratoga County, NY"	"36091"	28619	2906337	9.85	3370.92
+	"New York"	"36"	"Schenectady County, NY"	"36093"	23875	2011033	11.87	3289.74
+	"New York"	"36"	"Suffolk County, NY"	"36103"	210532	19381641	10.86	3285.75
+	"New York"	"36"	"Tompkins County, NY"	"36109"	4669	624263	7.48	3350.57
+	"New York"	"36"	"Ulster County, NY"	"36111"	20895	2351762	8.88	3348.75
+	"New York"	"36"	"Westchester County, NY"	"36119"	139568	12489482	11.17	3259.45
+	"New York"	"36"	"Unidentified Counties, NY"	"36999"	253381	25588938	9.90	3343.98
+"Total"	"New York"	"36"			3103371	253849000	12.23	3264.72
+"Total"					3103371	253849000	12.23	3264.72
+"---"
+"Dataset: Natality, 2007-2019"
+"Query Parameters:"
+"States: New York (36)"
+"Group By: State; County"
+"Show Totals: True"
+"Show Zero Values: False"
+"Show Suppressed: False"
+"Calculate Rates Per: 1,000"
+"Population Option: Default intercensal populations for years 2007-2009"
+"---"
+"Help: See http://wonder.cdc.gov/wonder/help/Natality.html for more information."
+"---"
+"Query Date: Jul 3, 2021 9:10:21 AM"
+"---"
+"Suggested Citation: United States Department of Health and Human Services (US DHHS), Centers for Disease Control and Prevention"
+"(CDC), National Center for Health Statistics (NCHS), Division of Vital Statistics, Natality public-use data 2007-2019, on CDC"
+"WONDER Online Database, October 2020. Accessed at http://wonder.cdc.gov/natality-current.html on Jul 3, 2021 9:10:21 AM"
+"---"
+Caveats:
+"1. Each birth record represents one liveborn infant."
+"2. County-level data are shown only for counties with populations of 100,000 persons or more. Within each state, data for all"
+"counties with fewer than 100,000 persons are combined together under the label ""Unidentified Counties""."
+"3. Birth rates are calculated as the number of births divided by total population in the given year(s). When the numerator is"
+"sub-set by mother's race, mother's hispanicity, location, or year of birth, then the same sub-set for age, race, hispanicity,"
+"location and year applies to the denominator population."
+"4. <p> As a result of population changes the following counties do not have data available for all years.<br/> Before 2014 the"
+"data for the following counties was recoded to the ""Unidentified Counties"" category within the state of the county because"
+"they did not meet minimum population standards. Houston County, AL (01069); Navajo County, AZ (04017); Faulkner County, AR"
+"(05045); Saline County, AR (05125); Bartow County, GA (13015); Carroll County, GA (13045); Columbia County, GA (13073); Coweta"
+"County, GA (13077); Douglas County, GA (13097); Fayette County, GA (13113); Forsyth County, GA (13117); Lowndes County, GA"
+"(13185); Paulding County, GA (13223); Whitfield County, GA (13313); Bonneville County, ID (16019); DeKalb County, IL (17037);"
+"Kendall County, IL (17093); Clark County, IN (18019); Douglas County, KS (20045); Boone County, KY (21015); Hardin County, KY"
+"(21093); Warren County, KY (21227); Ascension Parish, LA (22005); Bossier Parish, LA (22015); Livingston Parish, LA (22063);"
+"Cecil County, MD (24015); St. Mary's County, MD (24037); Scott County, MN (27139); Wright County, MN (27171); Franklin County,"
+"MO (29071); Missoula County, MT (30063); Sandoval County, NM (35043); Tompkins County, NY (36109); Brunswick County, NC (37019);"
+"Craven County, NC (37049); Harnett County, NC (37085); Henderson County, NC (37089); Miami County, OH (39109); Canadian County,"
+"OK (40017); Adams County, PA (42001); Dorchester County, SC (45035); Pennington County, SD (46103); Wilson County, TN (47189);"
+"Comal County, TX (48091); Guadalupe County, TX (48187); Hays County, TX (48209); Kaufman County, TX (48257); Parker County, TX"
+"(48367); Cache County, UT (49005); Washington County, UT (49053); Spotsylvania County, VA (51177); Stafford County, VA (51179);"
+"Cowlitz County, WA (53015); Berkeley County, WV (54003); Fond du Lac County, WI (55039); Walworth County, WI (55127). </p> <p>"
+"After 2013 the data for the following counties was recoded to the ""Unidentified Counties"" category within the state of the"
+"county because they did not meet minimum population standards. Cape May County, NJ (34009); Portsmouth city, VA (51740). </p>"
+"5. Data for some counties in New York and Virginia have been revised for 2014 births based on updated residence population. More"
+"information: http://wonder.cdc.gov/wonder/help/Natality.html#county_2014."
+"6. Data in CDC WONDER for some counties in New York for 2009 births is slightly different than those previously published due to"
+"updated residence population values use in CDC WONDER. More information:"
+"http://wonder.cdc.gov/wonder/help/Natality.html#county_2009."
+"7. Records where the ""Birth Weight"" is ""Unknown or Not Stated"" are not included in the calculation of the ""Average Birth"
+"Weight"" measure."
+"8. Birth rates and fertility rates are calculated using the following populations: The populations for year 2019 are from the"
+"postcensal single-race series of July 1st estimates of the resident population, released by Census Bureau on June 25, 2020; and"
+"the postcensal bridged-race series of July 1st estimates of the resident population, released by NCHS on July 9, 2020. The"
+"populations for year 2018 are from the postcensal single-race series of July 1st estimates of the resident population, released"
+"by Census Bureau on June 21, 2019; and the postcensal bridged-race series of July 1st estimates of the resident population,"
+"released by NCHS on June 27, 2019. The populations for year 2017 are from the postcensal single-race series of July 1st"
+"estimates of the resident population, released by Census Bureau on June 21, 2018; and the postcensal bridged-race series of July"
+"1st estimates of the resident population, released by NCHS on June 27, 2018. The populations for year 2016 are from the"
+"postcensal single-race series of July 1st estimates of the resident population, released by Census Bureau on June 22, 2017; and"
+"the postcensal bridged-race series of July 1st estimates of the resident population, released by NCHS on June 26, 2017. The"
+"populations for year 2015 are from the postcensal bridged-race series of July 1st estimates of the resident population, released"
+"by NCHS on June 28, 2016. The populations for year 2014 are from the postcensal bridged-race series of July 1st estimates of the"
+"resident population, released by NCHS on June 30, 2015. The populations for year 2013 are from the postcensal bridged-race"
+"series of July 1st estimates of the resident population, released by NCHS on June 26, 2014. The populations for year 2012 are"
+"from the postcensal bridged-race series of July 1st estimates of the resident population, released by NCHS on June 13, 2013. The"
+"populations for year 2011 are from the postcensal bridged-race series of July 1st estimates of the resident population, released"
+"by NCHS on July 18, 2012. The populations for year 2010 are the bridged-race April 1, 2010 Census counts. The populations for"
+"years 2007-2009 are from the revised intercensal bridged-race series of July 1st estimates of the resident population, released"
+"by NCHS on October 26, 2012. More information: http://wonder.cdc.gov/wonder/help/Natality.html#Denominator-Population-Sources."
+"9. Bronx, New York (FIPS code 36005) represents Bronx Borough, New York City."
+"10. Kings County, New York (FIPS code 36047) represents Brooklyn Borough, New York City."
+"11. New York County, New York (FIPS code 36061) represents Manhattan Borough, New York City."
+"12. Queens, New York (FIPS code 36081) represents Queens Borough, New York City."
+"13. Richmond County, New York (FIPS code 36085) represents Staten Island Borough, New York City."
