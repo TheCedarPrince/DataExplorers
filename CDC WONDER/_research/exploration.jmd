@@ -71,9 +71,11 @@ When the data is given to us raw from CDC Wonder, it is not ready for reading in
 We apply the following transformations here:
 
 ```julia, results = "hidden"
-df =
-    CSV.File(datadir("exp_raw", "ny_2007_2019.txt"); limit = 29, drop = ["Notes"]) |>
-    DataFrame
+df = DataFrame(CSV.File(
+    datadir("exp_raw", "ny_2007_2019.txt");
+    limit = 29,
+    drop = ["Notes"],
+))
 CSV.write(datadir("exp_pro", "ny_2007_2019_processed.csv"), df)
 ```
 
