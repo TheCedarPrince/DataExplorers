@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<HTML lang="en">
+
+<BODY>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 twelve columns">
+                <div class="title">
+
+
+
+                </div>
+
+                <h1>Initial Set-Up</h1>
+                <h2>Activating Project Environment</h2>
+
+
+                <pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>DrWatson</span><span class='hljl-t'>
+</span><span class='hljl-nd'>@quickactivate</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;CDC WONDER&quot;</span>
+</pre>
+
+
+
+                <h2>Loading Packages</h2>
+
+
+                <pre class='hljl'>
+<span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>CSV</span><span class='hljl-t'>
+</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>DataFrames</span><span class='hljl-t'>
+</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Latexify</span><span class='hljl-t'>
+</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>PrettyTables</span><span class='hljl-t'>
+</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>PyPlot</span><span class='hljl-t'>
+</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Statistics</span><span class='hljl-t'>
+</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>TimeSeries</span><span class='hljl-t'>
+</span><span class='hljl-k'>using</span><span class='hljl-t'> </span><span class='hljl-n'>Weave</span>
+</pre>
+
+
+
+                <p>Here is a little run down on what these packages are used for in
+                    our analysis:</p>
+                <ul>
+                    <li>
+                        <p><a href="https://github.com/JuliaData/CSV.jl"><code>CSV</code></a>                            - Julia&#39;s multi-threaded CSV reader</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/JuliaData/DataFrames.jl"><code>DataFrames</code></a>                            - Julia&#39;s dataframe handler for easily manipulating
+                            data
+                        </p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/JuliaDynamics/DrWatson.jl"><code>DrWatson</code></a>                            - Incredibly helpful tool for managing Julia-based
+                            scientific experiments and exploration</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/korsbo/Latexify.jl"><code>Latexify</code></a>                            - Enables the conversion of Julia objects to other
+                            formats such as LaTeX or Markdown</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/ronisbr/PrettyTables.jl"><code>PrettyTables</code></a>                            - Printing pretty tables for nice references</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/JuliaPy/PyPlot.jl"><code>PyPlot</code></a>                            - Julia interface to the <code>matplotlib</code> plotting
+                            library
+                        </p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/JuliaLang/Statistics.jl"><code>Statistics</code></a>                            - Julia&#39;s standard library for useful statistical
+                            methods
+                        </p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/JuliaStats/TimeSeries.jl"><code>TimeSeries</code></a>                            - Package for working with time series data and functions
+                            such as moving averages</p>
+                    </li>
+                    <li>
+                        <p><a href="https://github.com/JunoLab/Weave.jl"><code>Weave</code></a>                            - Converts Julia Markdown files to other forms of output</p>
+                    </li>
+                </ul>
+                <h1>Familiarizing Ourselves with CDC Wonder</h1>
+                <h2>Introduction</h2>
+                <p>We are using data from the <a href="https://wonder.cdc.gov/natality.html">CDC Wonder Natality</a>                    reporting. This data is derived from birth certificates and
+                    we are using data from 2007 - 2019. Some additional detail
+                    on this data:</p>
+                <blockquote>
+                    <p>Beginning in 2007, data are reported from the the 2003 U.S.
+                        standard Certificate of Live Birth. With the implementation
+                        of the 2003 U.S. standard Certificate of Live Birth by
+                        the states, some data items are not comparable with the
+                        previous 1989 revision, resulting in changes to the data
+                        items available here. Beginning with year 2007, data for
+                        five new birth anomalies are available, and data for five
+                        maternal risk factors are no longer available. Beginning
+                        with year 2016, data for many additional items &#40;mostly
+                        medical and health items&#41; are available; &quot;bridged-race&quot;
+                        categories are not available in the 2016-2019 &#40;expanded&#41;
+                        database.
+                    </p>
+                </blockquote>
+                <h2>Building Our Dataset</h2>
+                <p>In particular, we formed our dataset from a 2007 - 2019 data request
+                    to CDC Wonder where we selected the following measures:</p>
+                <ul>
+                    <li>
+                        <p>Birth Rate</p>
+                    </li>
+                    <li>
+                        <p>Average Birth Weight</p>
+                    </li>
+                </ul>
+                <p>and grouped these results by &quot;State&quot; and &quot;County&quot;.
+                    Here, we only selected the state of New York for analysis as
+                    well as all the years available and left default ranges for
+                    everything else </p>
+                <h2>Generating Summary Trends</h2>
+                <h3>Pre-Processing Our Data</h3>
+                <p>When the data is given to us raw from CDC Wonder, it is not ready
+                    for reading into dataframes yet as it contains additional rows
+                    and columns that are not in CSV format. We apply the following
+                    transformations here:</p>
+
+
+                <pre class='hljl'>
+<span class='hljl-n'>df</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'>
+    </span><span class='hljl-n'>CSV</span><span class='hljl-oB'>.</span><span class='hljl-nf'>File</span><span class='hljl-p'>(</span><span class='hljl-nf'>datadir</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;exp_raw&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;ny_2007_2019.txt&quot;</span><span class='hljl-p'>);</span><span class='hljl-t'> </span><span class='hljl-n'>limit</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-ni'>29</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>drop</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-s'>&quot;Notes&quot;</span><span class='hljl-p'>])</span><span class='hljl-t'> </span><span class='hljl-oB'>|&gt;</span><span class='hljl-t'>
+    </span><span class='hljl-n'>DataFrame</span><span class='hljl-t'>
+</span><span class='hljl-n'>CSV</span><span class='hljl-oB'>.</span><span class='hljl-nf'>write</span><span class='hljl-p'>(</span><span class='hljl-nf'>datadir</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;exp_pro&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;ny_2007_2019_processed.csv&quot;</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+                <p>Per <code>DrWatson</code>, we use the <code>datadir</code> function
+                    to save our processed data to the <code>exp_pro</code> directory&#33;</p>
+                <h3>Loading Our Cleaned Data</h3>
+                <p>Now we are able to load in our cleaned data as a DataFrame as follows:</p>
+
+
+                <pre class='hljl'>
+<span class='hljl-n'>df</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>CSV</span><span class='hljl-oB'>.</span><span class='hljl-nf'>File</span><span class='hljl-p'>(</span><span class='hljl-nf'>datadir</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;exp_pro&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;ny_2007_2019_processed.csv&quot;</span><span class='hljl-p'>))</span><span class='hljl-t'> </span><span class='hljl-oB'>|&gt;</span><span class='hljl-t'> </span><span class='hljl-n'>DataFrame</span>
+</pre>
+
+
+
+                <p>And then we can preview our table using the great <code>Latexify</code>                    package:</p>
+
+
+                <pre class='hljl'>
+<span class='hljl-nf'>latexify</span><span class='hljl-p'>(</span><span class='hljl-nf'>first</span><span class='hljl-p'>(</span><span class='hljl-n'>df</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-p'>);</span><span class='hljl-t'> </span><span class='hljl-n'>env</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-sc'>:mdtable</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>latex</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-kc'>false</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+                <div class="markdown">
+                    <table>
+                        <tr>
+                            <th align="right">State</th>
+                            <th align="right">State Code</th>
+                            <th align="right">County</th>
+                            <th align="right">County Code</th>
+                            <th align="right">Births</th>
+                            <th align="right">Total Population</th>
+                            <th align="right">Birth Rate</th>
+                            <th align="right">Average Birth Weight</th>
+                        </tr>
+                        <tr>
+                            <td align="right">New York</td>
+                            <td align="right">36</td>
+                            <td align="right">Albany County, NY</td>
+                            <td align="right">36001</td>
+                            <td align="right">39757</td>
+                            <td align="right">3981132</td>
+                            <td align="right">9.99</td>
+                            <td align="right">3298.8</td>
+                        </tr>
+                        <tr>
+                            <td align="right">New York</td>
+                            <td align="right">36</td>
+                            <td align="right">Bronx County, NY</td>
+                            <td align="right">36005</td>
+                            <td align="right">280749</td>
+                            <td align="right">18368943</td>
+                            <td align="right">15.28</td>
+                            <td align="right">3197.47</td>
+                        </tr>
+                        <tr>
+                            <td align="right">New York</td>
+                            <td align="right">36</td>
+                            <td align="right">Broome County, NY</td>
+                            <td align="right">36007</td>
+                            <td align="right">26430</td>
+                            <td align="right">2563102</td>
+                            <td align="right">10.31</td>
+                            <td align="right">3306.45</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>Finding Most Populuous Counties</h3>
+                <p>As a first dive into our analysis, lets get a sense for some summary
+                    values&#33; First, lets find the most populuous counties in
+                    New York&#33;</p>
+
+
+                <pre class='hljl'>
+<span class='hljl-nf'>sort!</span><span class='hljl-p'>(</span><span class='hljl-n'>df</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>rev</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-kc'>true</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>names</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-s'>&quot;County&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>tab</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>Any</span><span class='hljl-p'>[</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-nf'>pretty_table</span><span class='hljl-p'>(</span><span class='hljl-n'>tab</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>header</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>names</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>backend</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-sc'>:html</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+                <!DOCTYPE html>
+                <html>
+                <meta charset="UTF-8">
+                <style>
+                    table,
+                    td,
+                    th {
+                        border-collapse: collapse;
+                        font-family: sans-serif;
+                    }
+
+                    td,
+                    th {
+                        border-bottom: 0;
+                        padding: 4px
+                    }
+
+                    tr:nth-child(odd) {
+                        background: #eee;
+                    }
+
+                    tr:nth-child(even) {
+                        background: #fff;
+                    }
+
+                    tr.header {
+                        background: navy !important;
+                        color: white;
+                        font-weight: bold;
+                    }
+
+                    tr.subheader {
+                        background: lightgray !important;
+                        color: black;
+                    }
+
+                    tr.headerLastRow {
+                        border-bottom: 2px solid black;
+                    }
+
+                    th.rowNumber,
+                    td.rowNumber {
+                        text-align: right;
+                    }
+                </style>
+
+                <body>
+                    <table>
+                        <tr class="header headerLastRow">
+                            <th style="text-align: right;">County</th>
+                            <th style="text-align: right;">Total Population</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Kings County, NY</td>
+                            <td style="text-align: right;">33263747</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Queens County, NY</td>
+                            <td style="text-align: right;">29520786</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Unidentified Counties, NY</td>
+                            <td style="text-align: right;">25588938</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">New York County, NY</td>
+                            <td style="text-align: right;">21031579</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Suffolk County, NY</td>
+                            <td style="text-align: right;">19381641</td>
+                        </tr>
+                    </table>
+                </body>
+
+                </html>
+
+
+                <p>As you can see, we get a group of counties lumped together in the
+                    &quot;County&quot; column called &quot;Unidentified Counties,
+                    NY&quot;. Let&#39;s remove that from our dataframe going forward:</p>
+
+
+                <pre class='hljl'>
+<span class='hljl-nf'>delete!</span><span class='hljl-p'>(</span><span class='hljl-n'>df</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-ni'>3</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+                <p>And let&#39;s check the county table again:</p>
+
+
+                <pre class='hljl'>
+<span class='hljl-n'>tab</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>Any</span><span class='hljl-p'>[</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Total Population&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-nf'>pretty_table</span><span class='hljl-p'>(</span><span class='hljl-n'>tab</span><span class='hljl-p'>;</span><span class='hljl-t'> </span><span class='hljl-n'>header</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>names</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-n'>backend</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-sc'>:html</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+                <!DOCTYPE html>
+                <html>
+                <meta charset="UTF-8">
+                <style>
+                    table,
+                    td,
+                    th {
+                        border-collapse: collapse;
+                        font-family: sans-serif;
+                    }
+
+                    td,
+                    th {
+                        border-bottom: 0;
+                        padding: 4px
+                    }
+
+                    tr:nth-child(odd) {
+                        background: #eee;
+                    }
+
+                    tr:nth-child(even) {
+                        background: #fff;
+                    }
+
+                    tr.header {
+                        background: navy !important;
+                        color: white;
+                        font-weight: bold;
+                    }
+
+                    tr.subheader {
+                        background: lightgray !important;
+                        color: black;
+                    }
+
+                    tr.headerLastRow {
+                        border-bottom: 2px solid black;
+                    }
+
+                    th.rowNumber,
+                    td.rowNumber {
+                        text-align: right;
+                    }
+                </style>
+
+                <body>
+                    <table>
+                        <tr class="header headerLastRow">
+                            <th style="text-align: right;">County</th>
+                            <th style="text-align: right;">Total Population</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Kings County, NY</td>
+                            <td style="text-align: right;">33263747</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Queens County, NY</td>
+                            <td style="text-align: right;">29520786</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">New York County, NY</td>
+                            <td style="text-align: right;">21031579</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Suffolk County, NY</td>
+                            <td style="text-align: right;">19381641</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Bronx County, NY</td>
+                            <td style="text-align: right;">18368943</td>
+                        </tr>
+                    </table>
+                </body>
+
+                </html>
+
+
+                <p>Great&#33; Let&#39;s move into a bit more of a deeper analysis.</p>
+                <h3>Finding Counties with the Most Births</h3>
+                <p>As we are working with natality data, I think it would be wise
+                    to see where births are occurring&#33; Let&#39;s find the top
+                    five counties with most births in New York similar to how we
+                    found largest populations:</p>
+
+
+                <pre class='hljl'>
+<span class='hljl-nf'>sort!</span><span class='hljl-p'>(</span><span class='hljl-n'>df</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Births&quot;</span><span class='hljl-p'>),</span><span class='hljl-t'> </span><span class='hljl-n'>rev</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-kc'>true</span><span class='hljl-p'>)</span><span class='hljl-t'>
+</span><span class='hljl-n'>names</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-p'>[</span><span class='hljl-s'>&quot;County&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;Births&quot;</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-n'>tab</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>Any</span><span class='hljl-p'>[</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>1</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Births&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>2</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Births&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>3</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Births&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>4</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Births&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+    </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-sc'>:County</span><span class='hljl-p'>]</span><span class='hljl-t'> </span><span class='hljl-n'>df</span><span class='hljl-p'>[</span><span class='hljl-ni'>5</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>Symbol</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;Births&quot;</span><span class='hljl-p'>)]</span><span class='hljl-t'>
+</span><span class='hljl-p'>]</span><span class='hljl-t'>
+</span><span class='hljl-nf'>pretty_table</span><span class='hljl-p'>(</span><span class='hljl-t'>
+    </span><span class='hljl-n'>tab</span><span class='hljl-p'>;</span><span class='hljl-t'>
+    </span><span class='hljl-n'>title</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;Counties with Most Births&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'>
+    </span><span class='hljl-n'>title_alignment</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-sc'>:c</span><span class='hljl-p'>,</span><span class='hljl-t'>
+    </span><span class='hljl-n'>header</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-n'>names</span><span class='hljl-p'>,</span><span class='hljl-t'>
+    </span><span class='hljl-n'>backend</span><span class='hljl-t'> </span><span class='hljl-oB'>=</span><span class='hljl-t'> </span><span class='hljl-sc'>:html</span><span class='hljl-p'>,</span><span class='hljl-t'>
+</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+                <!DOCTYPE html>
+                <html>
+                <meta charset="UTF-8">
+                <style>
+                    table,
+                    td,
+                    th {
+                        border-collapse: collapse;
+                        font-family: sans-serif;
+                    }
+
+                    td,
+                    th {
+                        border-bottom: 0;
+                        padding: 4px
+                    }
+
+                    tr:nth-child(odd) {
+                        background: #eee;
+                    }
+
+                    tr:nth-child(even) {
+                        background: #fff;
+                    }
+
+                    tr.header {
+                        background: navy !important;
+                        color: white;
+                        font-weight: bold;
+                    }
+
+                    tr.subheader {
+                        background: lightgray !important;
+                        color: black;
+                    }
+
+                    tr.headerLastRow {
+                        border-bottom: 2px solid black;
+                    }
+
+                    th.rowNumber,
+                    td.rowNumber {
+                        text-align: right;
+                    }
+                </style>
+
+                <body>
+                    <table>
+                        <caption style="text-align: center;">Counties with Most Births</caption>
+                        <tr class="header headerLastRow">
+                            <th style="text-align: right;">County</th>
+                            <th style="text-align: right;">Births</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Kings County, NY</td>
+                            <td style="text-align: right;">532784</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Queens County, NY</td>
+                            <td style="text-align: right;">390625</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Bronx County, NY</td>
+                            <td style="text-align: right;">280749</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">New York County, NY</td>
+                            <td style="text-align: right;">244766</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Suffolk County, NY</td>
+                            <td style="text-align: right;">210532</td>
+                        </tr>
+                    </table>
+                </body>
+
+                </html>
+
+
+                <p>Very similar results to our previous table, but this time, Bronx
+                    County jumped up to the third position&#33;</p>
+                <h1>Final Steps</h1>
+                <h2>Export Julia Markdown Document as Jupyter Notebook</h2>
+
+
+                <pre class='hljl'>
+<span class='hljl-nf'>convert_doc</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;exploration.jmd&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-nf'>projectdir</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;notebooks&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;exploration.ipynb&quot;</span><span class='hljl-p'>))</span>
+</pre>
+
+
+                <h2>Export Julia Markdown Document as an HTML Document</h2>
+
+
+                <pre class='hljl'>
+<span class='hljl-nf'>weave</span><span class='hljl-p'>(</span><span class='hljl-s'>&quot;exploration.jmd&quot;</span><span class='hljl-p'>,</span><span class='hljl-t'> </span><span class='hljl-s'>&quot;exploration.html&quot;</span><span class='hljl-p'>)</span>
+</pre>
+
+
+
+                <HR/>
+                <div class="footer">
+                    <p>
+                        Published from <a href="exploration.jmd">exploration.jmd</a>                        using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a>                        v0.10.10 on 2021-07-15.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</BODY>
+
+</HTML>
