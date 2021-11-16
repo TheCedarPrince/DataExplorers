@@ -11,7 +11,7 @@ The website_* must be defined for the RSS to work
 -->
 website_title = "Julia Data Explorers"
 website_descr = "Exploring data with Julia"
-website_url   = "https://thecedarprince.github.io/DataExplorers/"
+website_url   = "http://jacobzelko.com/DataExplorers/"
 
 author = "Jacob Zelko"
 
