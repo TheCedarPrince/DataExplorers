@@ -17,8 +17,6 @@ author = "Jacob Zelko"
 
 mintoclevel = 2
 
-prepath = "DataExplorers"
-
 <!--
 Add here files or directories that should be ignored by Franklin, otherwise
 these files might be copied and, if markdown, processed by Franklin which
