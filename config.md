@@ -9,22 +9,22 @@ Add here global page variables to use throughout your
 website.
 The website_* must be defined for the RSS to work
 -->
-@def website_title = "Julia Data Explorers"
-@def website_descr = "Exploring data with Julia"
-@def website_url   = "https://thecedarprince.github.io/DataExplorers/"
+website_title = "Julia Data Explorers"
+website_descr = "Exploring data with Julia"
+website_url   = "https://thecedarprince.github.io/DataExplorers/"
 
-@def author = "Jacob Zelko"
+author = "Jacob Zelko"
 
-@def mintoclevel = 2
+mintoclevel = 2
 
-@def prepath = "DataExplorers"
+prepath = "DataExplorers"
 
 <!--
 Add here files or directories that should be ignored by Franklin, otherwise
 these files might be copied and, if markdown, processed by Franklin which
 you might not want. Indicate directories by ending the name with a `/`.
 -->
-@def ignore = ["node_modules/", "franklin", "franklin.pub"]
+ignore = ["node_modules/", "franklin", "franklin.pub"]
 
 <!--
 Add here global latex commands to use throughout your
