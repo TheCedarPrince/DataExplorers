@@ -1,3 +1,10 @@
++++
+title = "Weave Example"
+weave = false
+date = Date(2021, 7, 15)
+rss = "Weaving a tapestry of fun with Franklin and Weave.jl"
++++
+
 @def title = "Menu 3"
 
 # Working with tags
