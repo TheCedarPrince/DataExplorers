@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>-</title>
+
+<!-- TODO check if math works with plotly  -->
+<!-- Need to load plotly before Mathjax or pandoc equations don't work -->
+
+
+<script type="text/javascript">
+  var fileref=document.createElement('script')
+  fileref.setAttribute("type","text/javascript")
+  fileref.setAttribute("src", "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML")
+  document.getElementsByTagName("head")[0].appendChild(fileref)
+</script>
+
+  <style type="text/css">
+  @font-face {
+    font-style: normal;
+    font-weight: 300;
+  }
+  @font-face {
+    font-style: normal;
+    font-weight: 400;
+  }
+  @font-face {
+    font-style: normal;
+    font-weight: 600;
+  }
+  html {
+    font-family: sans-serif; /* 1 */
+    -ms-text-size-adjust: 100%; /* 2 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+  }
+  body {
+    margin: 0;
+  }
+  article,
+  aside,
+  details,
+  figcaption,
+  figure,
+  footer,
+  header,
+  hgroup,
+  main,
+  menu,
+  nav,
+  section,
+  summary {
+    display: block;
+  }
+  audio,
+  canvas,
+  progress,
+  video {
+    display: inline-block; /* 1 */
+    vertical-align: baseline; /* 2 */
+  }
+  audio:not([controls]) {
+    display: none;
+    height: 0;
+  }
+  [hidden],
+  template {
+    display: none;
+  }
+  a:active,
+  a:hover {
+    outline: 0;
+  }
+  abbr[title] {
+    border-bottom: 1px dotted;
+  }
+  b,
+  strong {
+    font-weight: bold;
+  }
+  dfn {
+    font-style: italic;
+  }
+  h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+  }
+  mark {
+    background: #ff0;
+    color: #000;
+  }
+  small {
+    font-size: 80%;
+  }
+  sub,
+  sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  sup {
+    top: -0.5em;
+  }
+  sub {
+    bottom: -0.25em;
+  }
+  img {
+    border: 0;
+  }
+  svg:not(:root) {
+    overflow: hidden;
+  }
+  figure {
+    margin: 1em 40px;
+  }
+  hr {
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 0;
+  }
+  pre {
+    overflow: auto;
+  }
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+  }
+  button,
+  input,
+  optgroup,
+  select,
+  textarea {
+    color: inherit; /* 1 */
+    font: inherit; /* 2 */
+    margin: 0; /* 3 */
+  }
+  button {
+    overflow: visible;
+  }
+  button,
+  select {
+    text-transform: none;
+  }
+  button,
+  html input[type="button"], /* 1 */
+  input[type="reset"],
+  input[type="submit"] {
+    -webkit-appearance: button; /* 2 */
+    cursor: pointer; /* 3 */
+  }
+  button[disabled],
+  html input[disabled] {
+    cursor: default;
+  }
+  button::-moz-focus-inner,
+  input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+  input {
+    line-height: normal;
+  }
+  input[type="checkbox"],
+  input[type="radio"] {
+    box-sizing: border-box; /* 1 */
+    padding: 0; /* 2 */
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+  }
+  input[type="search"] {
+    -webkit-appearance: textfield; /* 1 */
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box; /* 2 */
+    box-sizing: content-box;
+  }
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+  }
+  legend {
+    border: 0; /* 1 */
+    padding: 0; /* 2 */
+  }
+  textarea {
+    overflow: auto;
+  }
+  optgroup {
+    font-weight: bold;
+  }
+  table {
+    font-family: monospace, monospace;
+    font-size : 0.8em;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  td,
+  th {
+    padding: 0;
+  }
+  thead th {
+      border-bottom: 1px solid black;
+      background-color: white;
+  }
+  tr:nth-child(odd){
+    background-color: rgb(248,248,248);
+  }
+
+  /*
+  * Skeleton V2.0.4
+  * Copyright 2014, Dave Gamache
+  * www.getskeleton.com
+  * Free to use under the MIT license.
+  * http://www.opensource.org/licenses/mit-license.php
+  * 12/29/2014
+  */
+  .container {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box; }
+  .column,
+  .columns {
+    width: 100%;
+    float: left;
+    box-sizing: border-box; }
+  @media (min-width: 400px) {
+    .container {
+      width: 85%;
+      padding: 0; }
+  }
+  @media (min-width: 550px) {
+    .container {
+      width: 80%; }
+    .column,
+    .columns {
+      margin-left: 4%; }
+    .column:first-child,
+    .columns:first-child {
+      margin-left: 0; }
+
+    .one.column,
+    .one.columns                    { width: 4.66666666667%; }
+    .two.columns                    { width: 13.3333333333%; }
+    .three.columns                  { width: 22%;            }
+    .four.columns                   { width: 30.6666666667%; }
+    .five.columns                   { width: 39.3333333333%; }
+    .six.columns                    { width: 48%;            }
+    .seven.columns                  { width: 56.6666666667%; }
+    .eight.columns                  { width: 65.3333333333%; }
+    .nine.columns                   { width: 74.0%;          }
+    .ten.columns                    { width: 82.6666666667%; }
+    .eleven.columns                 { width: 91.3333333333%; }
+    .twelve.columns                 { width: 100%; margin-left: 0; }
+
+    .one-third.column               { width: 30.6666666667%; }
+    .two-thirds.column              { width: 65.3333333333%; }
+
+    .one-half.column                { width: 48%; }
+
+    /* Offsets */
+    .offset-by-one.column,
+    .offset-by-one.columns          { margin-left: 8.66666666667%; }
+    .offset-by-two.column,
+    .offset-by-two.columns          { margin-left: 17.3333333333%; }
+    .offset-by-three.column,
+    .offset-by-three.columns        { margin-left: 26%;            }
+    .offset-by-four.column,
+    .offset-by-four.columns         { margin-left: 34.6666666667%; }
+    .offset-by-five.column,
+    .offset-by-five.columns         { margin-left: 43.3333333333%; }
+    .offset-by-six.column,
+    .offset-by-six.columns          { margin-left: 52%;            }
+    .offset-by-seven.column,
+    .offset-by-seven.columns        { margin-left: 60.6666666667%; }
+    .offset-by-eight.column,
+    .offset-by-eight.columns        { margin-left: 69.3333333333%; }
+    .offset-by-nine.column,
+    .offset-by-nine.columns         { margin-left: 78.0%;          }
+    .offset-by-ten.column,
+    .offset-by-ten.columns          { margin-left: 86.6666666667%; }
+    .offset-by-eleven.column,
+    .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
+
+    .offset-by-one-third.column,
+    .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
+    .offset-by-two-thirds.column,
+    .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
+
+    .offset-by-one-half.column,
+    .offset-by-one-half.columns     { margin-left: 52%; }
+
+  }
+  html {
+    font-size: 62.5%; }
+  body {
+    font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+    line-height: 1.6;
+    font-weight: 400;
+    font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #222; }
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-weight: 300; }
+  h1 { font-size: 3.6rem; line-height: 1.2;  letter-spacing: -.1rem;}
+  h2 { font-size: 3.4rem; line-height: 1.25; letter-spacing: -.1rem; }
+  h3 { font-size: 3.2rem; line-height: 1.3;  letter-spacing: -.1rem; }
+  h4 { font-size: 2.8rem; line-height: 1.35; letter-spacing: -.08rem; }
+  h5 { font-size: 2.4rem; line-height: 1.5;  letter-spacing: -.05rem; }
+  h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
+
+  p {
+    margin-top: 0; }
+  a {
+    color: #1EAEDB; }
+  a:hover {
+    color: #0FA0CE; }
+  .button,
+  button,
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"] {
+    display: inline-block;
+    height: 38px;
+    padding: 0 30px;
+    color: #555;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 38px;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    cursor: pointer;
+    box-sizing: border-box; }
+  .button:hover,
+  button:hover,
+  input[type="submit"]:hover,
+  input[type="reset"]:hover,
+  input[type="button"]:hover,
+  .button:focus,
+  button:focus,
+  input[type="submit"]:focus,
+  input[type="reset"]:focus,
+  input[type="button"]:focus {
+    color: #333;
+    border-color: #888;
+    outline: 0; }
+  .button.button-primary,
+  button.button-primary,
+  input[type="submit"].button-primary,
+  input[type="reset"].button-primary,
+  input[type="button"].button-primary {
+    color: #FFF;
+    background-color: #33C3F0;
+    border-color: #33C3F0; }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    color: #FFF;
+    background-color: #1EAEDB;
+    border-color: #1EAEDB; }
+  input[type="email"],
+  input[type="number"],
+  input[type="search"],
+  input[type="text"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="password"],
+  textarea,
+  select {
+    height: 38px;
+    padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+    background-color: #fff;
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    box-shadow: none;
+    box-sizing: border-box; }
+  /* Removes awkward default styles on some inputs for iOS */
+  input[type="email"],
+  input[type="number"],
+  input[type="search"],
+  input[type="text"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="password"],
+  textarea {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none; }
+  textarea {
+    min-height: 65px;
+    padding-top: 6px;
+    padding-bottom: 6px; }
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="search"]:focus,
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="url"]:focus,
+  input[type="password"]:focus,
+  textarea:focus,
+  select:focus {
+    border: 1px solid #33C3F0;
+    outline: 0; }
+  label,
+  legend {
+    display: block;
+    margin-bottom: .5rem;
+    font-weight: 600; }
+  fieldset {
+    padding: 0;
+    border-width: 0; }
+  input[type="checkbox"],
+  input[type="radio"] {
+    display: inline; }
+  label > .label-body {
+    display: inline-block;
+    margin-left: .5rem;
+    font-weight: normal; }
+  ul {
+    list-style: circle inside; }
+  ol {
+    list-style: decimal inside; }
+  ol, ul {
+    padding-left: 0;
+    margin-top: 0; }
+  ul ul,
+  ul ol,
+  ol ol,
+  ol ul {
+    margin: 1.5rem 0 1.5rem 3rem;
+    font-size: 90%; }
+  li {
+    margin-bottom: 1rem; }
+  th,
+  td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #E1E1E1; }
+  th:first-child,
+  td:first-child {
+    padding-left: 0; }
+  th:last-child,
+  td:last-child {
+    padding-right: 0; }
+  button,
+  .button {
+    margin-bottom: 1rem; }
+  input,
+  textarea,
+  select,
+  fieldset {
+    margin-bottom: 1.5rem; }
+  pre,
+  blockquote,
+  dl,
+  figure,
+  table,
+  p,
+  ul,
+  ol,
+  form {
+    margin-bottom: 2.5rem; }
+  .u-full-width {
+    width: 100%;
+    box-sizing: border-box; }
+  .u-max-full-width {
+    max-width: 100%;
+    box-sizing: border-box; }
+  .u-pull-right {
+    float: right; }
+  .u-pull-left {
+    float: left; }
+  hr {
+    margin-top: 3rem;
+    margin-bottom: 3.5rem;
+    border-width: 0;
+    border-top: 1px solid #E1E1E1; }
+  .container:after,
+  .row:after,
+  .u-cf {
+    content: "";
+    display: table;
+    clear: both; }
+
+  pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  pre.sourceCode.julia {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  pre.julia-error {
+    color : red
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  }
+  code {
+    background-color: #ffffff;
+    border-radius: 4px;
+  }
+
+  code.sourceCode.julia {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+  }
+
+
+  @media (min-width: 400px) {}
+  @media (min-width: 550px) {}
+  @media (min-width: 750px) {}
+  @media (min-width: 1000px) {}
+  @media (min-width: 1200px) {}
+
+  h1.title {margin-top : 20px}
+  img {max-width : 100%}
+  </style>
+
+
+<style>
+pre.hljl {
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 5px;
+    overflow-x: auto;
+    color: rgb(68,68,68); background-color: rgb(251,251,251); }
+pre.hljl > span.hljl-t { }
+pre.hljl > span.hljl-w { }
+pre.hljl > span.hljl-e { }
+pre.hljl > span.hljl-eB { }
+pre.hljl > span.hljl-o { }
+pre.hljl > span.hljl-k { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kc { color: rgb(59,151,46); font-style: italic; }
+pre.hljl > span.hljl-kd { color: rgb(214,102,97); font-style: italic; }
+pre.hljl > span.hljl-kn { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kp { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kr { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kt { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-n { }
+pre.hljl > span.hljl-na { }
+pre.hljl > span.hljl-nb { }
+pre.hljl > span.hljl-nbp { }
+pre.hljl > span.hljl-nc { }
+pre.hljl > span.hljl-ncB { }
+pre.hljl > span.hljl-nd { color: rgb(214,102,97); }
+pre.hljl > span.hljl-ne { }
+pre.hljl > span.hljl-neB { }
+pre.hljl > span.hljl-nf { color: rgb(66,102,213); }
+pre.hljl > span.hljl-nfm { color: rgb(66,102,213); }
+pre.hljl > span.hljl-np { }
+pre.hljl > span.hljl-nl { }
+pre.hljl > span.hljl-nn { }
+pre.hljl > span.hljl-no { }
+pre.hljl > span.hljl-nt { }
+pre.hljl > span.hljl-nv { }
+pre.hljl > span.hljl-nvc { }
+pre.hljl > span.hljl-nvg { }
+pre.hljl > span.hljl-nvi { }
+pre.hljl > span.hljl-nvm { }
+pre.hljl > span.hljl-l { }
+pre.hljl > span.hljl-ld { color: rgb(148,91,176); font-style: italic; }
+pre.hljl > span.hljl-s { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sa { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sb { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sc { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sd { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdC { color: rgb(201,61,57); }
+pre.hljl > span.hljl-se { color: rgb(59,151,46); }
+pre.hljl > span.hljl-sh { color: rgb(201,61,57); }
+pre.hljl > span.hljl-si { }
+pre.hljl > span.hljl-so { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sr { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ss { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ssB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-nB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nbB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nfB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nh { color: rgb(59,151,46); }
+pre.hljl > span.hljl-ni { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nil { color: rgb(59,151,46); }
+pre.hljl > span.hljl-noB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-oB { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-ow { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-p { }
+pre.hljl > span.hljl-c { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-ch { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cm { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cp { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cpB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cs { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-csB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-g { }
+pre.hljl > span.hljl-gd { }
+pre.hljl > span.hljl-ge { }
+pre.hljl > span.hljl-geB { }
+pre.hljl > span.hljl-gh { }
+pre.hljl > span.hljl-gi { }
+pre.hljl > span.hljl-go { }
+pre.hljl > span.hljl-gp { }
+pre.hljl > span.hljl-gs { }
+pre.hljl > span.hljl-gsB { }
+pre.hljl > span.hljl-gt { }
+</style>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+<body>
+<div class="container">
+        <div class="row">
+            <div class="col-md-12 twelve columns">
+
+
+
+<h1 id="voronoi-diagrams">Voronoi Diagrams</h1>
+<h2 id="auxiliary-helper-functions">Auxiliary Helper Functions</h2>
+<p>Defining helper functions for Voronoi computations:</p>
+<h3 id="mathematical-operations">Mathematical Operations</h3>
+<h4 id="calculating-slope-between-two-points">Calculating Slope between Two Points</h4>
+<p>Calculating the slope given two points:</p>
+<p><span class="math display">\[m = \frac{y_{2} - y_{1}}{x_{2} - x_{1}}\]</span></p>
+<p>Where <span class="math inline">\(P_{1} = (x_{1}, y_{1})\)</span> is a first point and <span class="math inline">\(P_{2} = (x_{2}, y_{2})\)</span> is a second point.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>slope(x₁<span class="op">,</span> y₁<span class="op">,</span> x₂<span class="op">,</span> y₂) <span class="op">=</span> (y₂ <span class="op">-</span> y₁) <span class="op">/</span> (x₂ <span class="op">-</span> x₁)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>slope(P1<span class="op">,</span> P2) <span class="op">=</span> (P2.y <span class="op">-</span> P1.y) <span class="op">/</span> (P2.x <span class="op">-</span> P1.x)</span></code></pre></div>
+<pre><code>slope (generic function with 2 methods)</code></pre>
+<h4 id="calculating-midpoint-between-two-points">Calculating Midpoint between Two Points</h4>
+<p>Calculating the midpoint given two points:</p>
+<p><span class="math display">\[M = (\frac{x_{1} + x_{2}}{2}, \frac{y_{1} + y_{2}}{2})\]</span></p>
+<p>Where <span class="math inline">\(P_{1} = (x_{1}, y_{1})\)</span> is a first point and <span class="math inline">\(P_{2} = (x_{2}, y_{2})\)</span> is a second point.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>midpoint(x₁<span class="op">,</span> y₁<span class="op">,</span> x₂<span class="op">,</span> y₂) <span class="op">=</span> ((x₁ <span class="op">+</span> x₂) <span class="op">/</span> <span class="fl">2</span><span class="op">,</span> (y₁ <span class="op">+</span> y₂) <span class="op">/</span> <span class="fl">2</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>midpoint(P1<span class="op">,</span> P2) <span class="op">=</span> ((P1.x <span class="op">+</span> P2.x) <span class="op">/</span> <span class="fl">2</span><span class="op">,</span> (P2.y <span class="op">+</span> P2.y) <span class="op">/</span> <span class="fl">2</span>)</span></code></pre></div>
+<pre><code>midpoint (generic function with 2 methods)</code></pre>
+<h4 id="point-slope-form">Point Slope Form</h4>
+<p><span class="math display">\[y - y_{1} = m(x - x_{1})\]</span></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>point_slope(x<span class="op">,</span> x₁<span class="op">,</span> y₁<span class="op">,</span> m) <span class="op">=</span> (x<span class="op">,</span> m <span class="op">*</span> (x <span class="op">-</span> x₁) <span class="op">+</span> y₁)</span></code></pre></div>
+<pre><code>point_slope (generic function with 1 method)</code></pre>
+<h3 id="luxor-helper">Luxor Helper</h3>
+<p>Make the Luxor drawing background:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">using</span> Luxor</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="kw">function</span> make_drawing(width<span class="op">,</span> height<span class="op">,</span> img_path<span class="op">,</span> bkg_color<span class="op">,</span> origin_p)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>    d <span class="op">=</span> Drawing(width<span class="op">,</span> height<span class="op">,</span> img_path)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>    background(bkg_color)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>    origin(origin_p)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>    <span class="kw">return</span> d</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div>
+<pre><code>make_drawing (generic function with 1 method)</code></pre>
+<h2 id="case-one-seed-voronoi">Case: One Seed Voronoi</h2>
+<p>This explores the case of one seed in a Voronoi diagram. First the set up of the diagram as follows:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>width <span class="op">=</span> <span class="fl">500</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>height <span class="op">=</span> <span class="fl">500</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>path <span class="op">=</span> <span class="st">&quot;voronoi_1.png&quot;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>color <span class="op">=</span> <span class="st">&quot;black&quot;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a>make_drawing(width<span class="op">,</span> height<span class="op">,</span> path<span class="op">,</span> color<span class="op">,</span> Point(<span class="fl">0</span><span class="op">,</span> <span class="fl">0</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64," /> </p>
+<p>Then we can place the seed for the one cell case:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>center <span class="op">=</span> Point(width <span class="op">/</span> <span class="fl">2</span><span class="op">,</span> height <span class="op">/</span> <span class="fl">2</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>seeds <span class="op">=</span> [center]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>sethue(<span class="st">&quot;red&quot;</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>circle(seeds[<span class="fl">1</span>]<span class="op">,</span> <span class="fl">15</span><span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>fill)</span></code></pre></div>
+<pre><code>true</code></pre>
+<p>Extract Voronoi regions:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="kw">if</span> length(seeds) <span class="op">==</span> <span class="fl">1</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>    setcolor(<span class="fl">1</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">0.4</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a>    v_region <span class="op">=</span> box(seeds[<span class="fl">1</span>]<span class="op">,</span> width<span class="op">,</span> height<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>fill)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div>
+<pre><code>4-element Vector{Point}:
+ Point(0.0, 500.0)
+ Point(0.0, 0.0)
+ Point(500.0, 0.0)
+ Point(500.0, 500.0)</code></pre>
+<p>Finalize diagram:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>finish()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>readpng(<span class="st">&quot;voronoi_1.png&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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xB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgsQdIEjcAYLEHSBI3AGCxB0gSNwBgv4N5LhQYG97MNQAAAAASUVORK5CYII=" /> </p>
+<h2 id="case-two-seed-voronoi">Case: Two Seed Voronoi</h2>
+<p>This explores the case of one seed in a Voronoi diagram. First the set up of the diagram as follows:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>width <span class="op">=</span> <span class="fl">500</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a>height <span class="op">=</span> <span class="fl">500</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a>path <span class="op">=</span> <span class="st">&quot;voronoi_2.png&quot;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a>color <span class="op">=</span> <span class="st">&quot;black&quot;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true"></a>make_drawing(width<span class="op">,</span> height<span class="op">,</span> path<span class="op">,</span> color<span class="op">,</span> Point(<span class="fl">250</span><span class="op">,</span> <span class="fl">250</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64," /> </p>
+<p>Then we can place the seeds for the two cell case:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>p1 <span class="op">=</span> Point(<span class="fl">125</span><span class="op">,</span> <span class="fl">0</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>p2 <span class="op">=</span> Point(<span class="op">-</span><span class="fl">125</span><span class="op">,</span> <span class="fl">0</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a>seeds <span class="op">=</span> [p1<span class="op">,</span> p2]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a>sethue(<span class="st">&quot;red&quot;</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a><span class="kw">for</span> seed <span class="kw">in</span> seeds</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a>    circle(seed<span class="op">,</span> <span class="fl">15</span><span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>fill)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div>
+<p>Extract Voronoi regions:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>sethue(<span class="st">&quot;white&quot;</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a>line(p1<span class="op">,</span> p2<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>stroke)</span></code></pre></div>
+<pre><code>true</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a>mp <span class="op">=</span> midpoint(p1.x<span class="op">,</span> p1.y<span class="op">,</span> p2.x<span class="op">,</span> p2.y) <span class="op">|&gt;</span> Point</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a>sp <span class="op">=</span> slope(p1.x<span class="op">,</span> p1.y<span class="op">,</span> p2.x<span class="op">,</span> p2.y)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a>first_point <span class="op">=</span> point_slope(<span class="op">-</span><span class="fl">250</span><span class="op">,</span> mp.x<span class="op">,</span> mp.y<span class="op">,</span> <span class="op">-</span><span class="fl">1</span> <span class="op">/</span> sp) <span class="op">|&gt;</span> Point</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true"></a>second_point <span class="op">=</span> point_slope(<span class="fl">250</span><span class="op">,</span> mp.x<span class="op">,</span> mp.y<span class="op">,</span> <span class="op">-</span><span class="fl">1</span> <span class="op">/</span> sp) <span class="op">|&gt;</span> Point</span></code></pre></div>
+<pre><code>Point(250.0, Inf)</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a>setcolor(<span class="fl">1</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">0.4</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a>b1 <span class="op">=</span> BoundingBox(Point(<span class="op">-</span><span class="fl">250</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">,</span> Point(<span class="fl">0</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a>box(Point(<span class="op">-</span><span class="fl">250</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">,</span> Point(<span class="fl">0</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>)<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>fill)</span></code></pre></div>
+<pre><code>4-element Vector{Point}:
+ Point(-250.0, 250.0)
+ Point(-250.0, -250.0)
+ Point(0.0, -250.0)
+ Point(0.0, 250.0)</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a>setcolor(<span class="fl">0</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">1</span><span class="op">,</span> <span class="fl">0.4</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a>b2 <span class="op">=</span> BoundingBox(Point(<span class="fl">250</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">,</span> Point(<span class="fl">0</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>)) </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a>box(Point(<span class="fl">250</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">,</span> Point(<span class="fl">0</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>)<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>fill)</span></code></pre></div>
+<pre><code>4-element Vector{Point}:
+ Point(0.0, 250.0)
+ Point(0.0, -250.0)
+ Point(250.0, -250.0)
+ Point(250.0, 250.0)</code></pre>
+<p>Midpoint line:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a>setcolor(<span class="fl">1</span><span class="op">,</span> <span class="fl">1</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">1</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>setline(<span class="fl">10</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a>line(Point(<span class="fl">0</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">,</span> Point(<span class="fl">0</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>)<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>stroke)</span></code></pre></div>
+<pre><code>true</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a>setcolor(<span class="fl">0</span><span class="op">,</span> <span class="fl">1</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">1</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a>setline(<span class="fl">10</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a>line(Point(<span class="op">-</span><span class="fl">250</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">,</span> Point(<span class="op">-</span><span class="fl">250</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>)<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>stroke)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a>line(Point(<span class="fl">250</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">,</span> Point(<span class="fl">250</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>)<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>stroke)</span></code></pre></div>
+<pre><code>true</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a>setcolor(<span class="fl">1</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">1</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a>setline(<span class="fl">10</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a>line(Point(<span class="op">-</span><span class="fl">250</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>)<span class="op">,</span> Point(<span class="fl">0</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>)<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>stroke)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a>line(Point(<span class="fl">0</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>)<span class="op">,</span> Point(<span class="fl">250</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>)<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>stroke)</span></code></pre></div>
+<pre><code>true</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a>setcolor(<span class="fl">1</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">1</span><span class="op">,</span> <span class="fl">1</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a>setline(<span class="fl">10</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a>line(Point(<span class="op">-</span><span class="fl">250</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">,</span> Point(<span class="fl">0</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>stroke)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a>line(Point(<span class="fl">0</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">,</span> Point(<span class="fl">250</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>stroke)</span></code></pre></div>
+<pre><code>true</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>voronoi_edges <span class="op">=</span> [(start_point <span class="op">=</span> Point(<span class="fl">0</span><span class="op">,</span> <span class="fl">250</span>)<span class="op">,</span> end_point <span class="op">=</span> Point(<span class="fl">0</span><span class="op">,</span> <span class="op">-</span><span class="fl">250</span>))]</span></code></pre></div>
+<pre><code>1-element Vector{NamedTuple{(:start_point, :end_point), Tuple{Point, Point}
+}}:
+ (start_point = Point(0.0, 250.0), end_point = Point(0.0, -250.0))</code></pre>
+<p>Finalize diagram:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a>finish()</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true"></a>readpng(<span class="st">&quot;voronoi_2.png&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /> </p>
+<h2 id="case-n-seed-voronoi">Case: <code>n</code>-Seed Voronoi</h2>
+<div class="sourceCode" id="cb36"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a>width <span class="op">=</span> <span class="fl">500</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true"></a>height <span class="op">=</span> <span class="fl">500</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true"></a>path <span class="op">=</span> <span class="st">&quot;voronoi_3.png&quot;</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true"></a>color <span class="op">=</span> <span class="st">&quot;black&quot;</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true"></a>make_drawing(width<span class="op">,</span> height<span class="op">,</span> path<span class="op">,</span> color<span class="op">,</span> Point(<span class="fl">250</span><span class="op">,</span> <span class="fl">250</span>))</span></code></pre></div>
+<p><img src="data:image/png;base64," /> </p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a><span class="kw">function</span> half_plane(p1<span class="op">,</span> p2<span class="op">,</span> width<span class="op">,</span> height)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true"></a>    mp <span class="op">=</span> midpoint(p1.x<span class="op">,</span> p1.y<span class="op">,</span> p2.x<span class="op">,</span> p2.y) <span class="op">|&gt;</span> Point</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true"></a>    sp <span class="op">=</span> slope(p1.x<span class="op">,</span> p1.y<span class="op">,</span> p2.x<span class="op">,</span> p2.y)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true"></a>    first_point <span class="op">=</span> point_slope(<span class="op">-</span><span class="fl">250</span><span class="op">,</span> mp.x<span class="op">,</span> mp.y<span class="op">,</span> sp <span class="op">==</span> <span class="fl">0</span> ? <span class="fl">0</span> <span class="op">:</span> <span class="op">-</span><span class="fl">1</span> <span class="op">/</span> sp) <span class="op">|&gt;</span> Point</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true"></a>    second_point <span class="op">=</span> point_slope(<span class="fl">250</span><span class="op">,</span> mp.x<span class="op">,</span> mp.y<span class="op">,</span> sp <span class="op">==</span> <span class="fl">0</span> ? <span class="fl">0</span> <span class="op">:</span> <span class="op">-</span><span class="fl">1</span> <span class="op">/</span> sp) <span class="op">|&gt;</span> Point</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true"></a>    half_1 <span class="op">=</span> [first_point<span class="op">,</span> second_point<span class="op">,</span> Point(width <span class="op">/</span> <span class="fl">2</span><span class="op">,</span> height <span class="op">/</span> <span class="fl">2</span>)]</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true"></a>    half_2 <span class="op">=</span> [first_point<span class="op">,</span> second_point<span class="op">,</span> Point(<span class="op">-</span>width <span class="op">/</span> <span class="fl">2</span><span class="op">,</span> <span class="op">-</span>height <span class="op">/</span> <span class="fl">2</span>)]</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true"></a>    <span class="kw">return</span> half_1<span class="op">,</span> half_2</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true"></a><span class="kw">end</span></span></code></pre></div>
+<pre><code>half_plane (generic function with 1 method)</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true"></a>p1 <span class="op">=</span> Point(<span class="fl">125</span><span class="op">,</span> <span class="fl">125</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true"></a>p2 <span class="op">=</span> Point(<span class="op">-</span><span class="fl">125</span><span class="op">,</span> <span class="op">-</span><span class="fl">125</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true"></a>half_1<span class="op">,</span> half_2 <span class="op">=</span> half_plane(p1<span class="op">,</span> p2<span class="op">,</span> <span class="fl">500</span><span class="op">,</span> <span class="fl">500</span>) </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true"></a>setcolor(<span class="fl">1</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">0.5</span>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true"></a>poly(half_1<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>fill)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true"></a>setcolor(<span class="fl">0</span><span class="op">,</span> <span class="fl">0</span><span class="op">,</span> <span class="fl">1</span><span class="op">,</span> <span class="fl">0.5</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true"></a>poly(half_2<span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>fill)</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true"></a></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true"></a>setcolor(<span class="fl">1</span><span class="op">,</span> <span class="fl">1</span><span class="op">,</span> <span class="fl">1</span><span class="op">,</span> <span class="fl">1</span>)</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true"></a>circle(p1<span class="op">,</span> <span class="fl">15</span><span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>fill)</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true"></a>circle(p2<span class="op">,</span> <span class="fl">15</span><span class="op">;</span> action <span class="op">=</span> <span class="op">:</span>fill)</span></code></pre></div>
+<pre><code>true</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode julia"><code class="sourceCode julia"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true"></a>finish()</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true"></a>readpng(<span class="st">&quot;voronoi_3.png&quot;</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAIAAABEtEjdAAAABmJLR0QA/wD/AP+gvaeTAAASYElEQVR4nO3dy49W9eHH8e/D4GWoihgvTchgAgtJJcZF2zgjRJMmbV3xW1SWLty4wKDiP4CJcaFighj5F1iozWxq2gWhaQa0dTkBmogahg1TI0JCwASc3wKDCDPPPJfvOed7eb3W53zyXb3z5LmdXgj7AgAFeTIcXdP1GQCI6clw9P/EHaAk18seQhB3gELcKHsQd4Ay3Fz2IO4ABbil7EHcAXJ3e9mDuANkbdmyB3EHyNdKZQ/iDpCpPmUP4g6Qo/5lD+IOkJ1Vyx7EHSAvg5Q9iDtARgYsexB3gFwMXvYg7gBZGKrsQdwB0jds2YO4AyRuhLIHcQdI2WhlD+IOkKyRyx7EHSBN45Q9iDtAgsYsexB3gNSMX/Yg7gBJiVL2IO4A6YhV9iDuAImIWPYg7gApiFv2IO4AnYte9iDuAN1qouxB3AE61FDZg7gDdKW5sgdxB+hEo2UP4g7QvqbLHsQdoGUtlD2IO0Cb2il7EHeA1rRW9iDuAO1os+xB3AFa0HLZg7gDNK39sgdxB2hUJ2UP4g7QnK7KHsQdoCEdlj2IO0ATui17EHeA6DovexB3gLhSKHsQd4CIEil7EHeAWNIpexB3gCiSKnsQd4DxpVb2IO4AY0qw7EHcAcaRZtmDuAOMLNmyB3EHGE3KZQ/iDjCCxMsexB1gWOmXPYg7wFCyKHsQd4DB5VL2IO4AA8qo7EHcAQaRV9mDuAOsKruyB3EH6C/HsgdxB+gj07IHcQdYSb5lD+IOsKysyx7EHeB2uZc9iDvALQooexB3gJuVUfYg7gA3FFP2IO4A15VU9iDuAKG4sgdxByiv7EHcgcoVWfYg7kDNSi17EHegWgWXPYg7UKeyyx7EHahQ8WUP4g7UpoayB3EHqlJJ2YO4A/Wop+xB3IFKVFX2IO5ADWorexB3oHgVlj2IO1C2OssexB0oWLVlD+IOlKrmsgdxB4pUedmDuAPlUfYg7kBhlP06cQfKoew3iDtQCGW/mbgDJVD2W4g7kD1lv524A3lT9mWJO5AxZV+JuAO5UvY+xB3IkrL3J+5AfpR9VeIOZEbZByHuQE6UfUDiDmRD2Qcn7kAelH0o4g5kQNmHJe5A6pR9BOIOJE3ZRyPuQLqUfWTiDiRK2cch7kCKlH1M4g4kR9nHJ+5AWpQ9CnEHEqLssazt+gBVmJjoPf30pp07H5uZmdq8ecOGDZMhhPPnL3/11fm5uYXZ2VPHji1cu7bU9TGhY8oeUS+EfV2foWSTk2tfeeWpvXunH3poXZ/LFhcv7d9//ODBzy9fvtra2SApyh6XuDdo167H33vvTxs33jvg9QsLF/fu/ftHH51o9FSQIGWPbiKEZ7s+Q4F6vbBv37MHDz533313DX7X+vV3Pf/8byYn7zhy5Oslb9JQDWVvgrjHt2ZN7/Dhv+ze/bterzfsvb1eb/v2TVu3PvjJJyf1nRooe0PEPb633vrDSy/9dpyFbdseXrt2zZEjX8c6EqRJ2Zsj7pHt2vX4gQN/Hn9nx45N8/OLJ09+O/4UpEnZG+V77jFNTq59990/Rpnq9XoHDjy3bt0dUdYgNcreNHGP6dVXn5qaui/W2saN97788u9jrUE6lL0F4h7NxETvtdem427u3Ts9MTH0p7KQMmVvh7hHs337pv6/VBrBI4/8anp6Ku4mdEjZWyPu0ezcubWZ2ceamIX2KXubxD2amZlGXmI3NAstU/aWiXs0mzdvaGJ2y5YHmpiFNil7+8Q9mvXrh/ingcHdf//dTcxCa5S9E+IONEjZuyLu0Vy48EMTs99/f6WJWWiBsndI3KM5ffq7Jma//LKRWWiasndL3KOZm1toZvZME7PQKGXvnLhHMzt7qpnZ/zYxC81R9hSIezTHji0sLl6Ku3nu3KXPPjsbdxMapeyJEPdorl1b2r//eNzNd96Z+/FHz+wgG8qeDnGP6f33Pz9z5kKstbNnL3744X9irUHTlD0p4h7TlStXX3/9H0sxno+3tLS0Z8+nly9fHX8KWqDsqfEkpshOnPjfnXdO7Njx6Jg7b775r0OHvohyJGiasidI3OM7evSbrVsf3Lbt4ZEXDh+e37PnUw/IJgvKniZxj29pKXz88YkQes8882ivN9yjNpaWlt5++9ju3X/zOSpZUPZkiXtTjh79Zn5+cXp6avA/FDtz5sKLL85+8MG/vWYnC8qeMnFv0MmT3x469MXFiz888cSv77nnzj5Xnjt36Y03/vnCC3+dn19s7XgwDmVPXC+EfV2foXxr1vRmZqZ27nxsZmZqy5YHNmy4O4Rw/vyV06e/m5tbmJ09dfz4We/DkBFlT5+4A8NR9iz4njswBGXPhbgDg1L2jIg7MBBlz4u4A6tT9uyIO7AKZc+RuAP9KHumxB1YkbLnS9yB5Sl71sQdWIay507cgVspewHEHfgFZS+DuAM/U/ZiiDvwE2UvibgDISh7ccQdUPYCiTvUTtmLJO5QNWUvlbhDvZS9YOIOlVL2sok71EjZiyfuUB1lr4G4Q12UvRLiDhVR9nqIO9RC2asi7lAFZa+NuEP5lL1C4g6FU/Y6iTuUTNmrJe5QLGWvmbhDmZS9cuIOBVJ2xB1Ko+wEcYfCKDvXiTuUQ9m5QdyhEMrOzcQdSqDs3ELcIXvKzu3EHfKm7CxL3CFjys5KxB1ypez0Ie6QJWWnP3GH/Cg7qxJ3yIyyMwhxh5woOwMSd8iGsjM4cYc8KDtDEXfIgLIzLHGH1Ck7IxB3SJqyMxpxh3QpOyMTd0iUsjMOcYcUKTtjEndIjrIzPnGHtCg7UYg7JETZiUXcIRXKTkTiDklQduISd+ieshOduEPHlJ0miDt0SdlpiLhDZ5Sd5og7dEPZaZS4QweUnaaJO7RN2WmBuEOrlJ12iDu0R9lpjbhDS5SdNok7tEHZaZm4Q+OUnfaJOzRL2emEuEODlJ2uiDs0RdnpkLhDI5Sdbok7xKfsdE7cITJlJwXiDjEpO4kQd4hG2UmHuEMcyk5SxB0iUHZSI+4wLmUnQeIOY1F20iTuMDplJ1niDiNSdlIm7jAKZSdx4g5DU3bSJ+4wHGUnC+IOQ1B2ciHuMChlJyPiDgNRdvIi7rA6ZSc74g6rUHZyJO7Qj7KTKXGHFSk7+RJ3WJ6ykzVxh2UoO7kTd7iVslMAcYdfUHbKIO7wM2WnGOIOP1F2SiLuEIKyUxxxB2WnQOJO7ZSdIok7VVN2SiXu1EvZKZi4Uyllp2ziTo2UneKJO9VRdmog7tRF2amEuFMRZace4k4tlJ2qiDtVUHZqI+6UT9mpkLhTOGWnTuJOyZSdaok7xVJ2aibulEnZqZy4UyBlB3GnNMoOQdwpjLLDdeJOOZQdbhB3CqHscDNxpwTKDrcQd7Kn7HA7cSdvyg7LEncypuywEnEnV8oOfYg7WVJ26E/cyY+yw6rEncwoOwxC3MmJssOAxJ1sKDsMTtzJg7LDUMSdDCg7DEvcSZ2ywwjEnaQpO4xG3EmXssPIxJ1EKTuMQ9xJkbLDmMSd5Cg7jE/cSYuyQxTiTkKUHWIRd1Kh7BCRuJMEZYe4xJ3uKTtEJ+50TNmhCeJOl5QdGiLudEbZoTniTjeUHRol7nRA2aFp4k7blB1aIO60StmhHeJOe5QdWiPutETZoU3iThuUHVom7jRO2aF94k6zlB06Ie40SNmhK+JOU5QdOiTuNELZoVviTnzKDp0TdyJTdkiBuBOTskMixJ1olB3SIe7EoeyQFHEnAmWH1Ig741J2SJC4MxZlhzSJO6NTdkiWuDMiZYeUiTujUHZInLgzNGWH9Ik7w1F2yIK4MwRlh1yIO4NSdsiIuDMQZYe8iDurU3bIjrizCmWHHIk7/Sg7ZErcWZGyQ77EneUpO2RN3FmGskPuxJ1bKTsUQNz5BWWHMog7P1N2KIa48xNlh5KIOyEoOxRH3FF2KJC4107ZoUjiXjVlh1KJe72UHQom7pVSdiibuNdI2aF44l4dZYcaiHtdlB0qIe4VUXaoh7jXQtmhKuJeBWWH2oh7+ZQdKiTuhVN2qJO4l0zZoVriXixlh5qJe5mUHSon7gVSdkDcS6PsQBD3wig7cJ24l0PZgRvEvRDKDtxM3Eug7MAtxD17yg7cTtzzpuzAssQ9Y8oOrETcc6XsQB/iniVlB/oT9/woO7Aqcc+MsgODEPecKDswIHHPhrIDgxP3PCg7MBRxz4CyA8Na2/UBWIWyk5fexMSmp59+bOfOqZmZDZs3T27YEEK4fP78+a++WpibOzU7u3Ds2NK1a10fs3y9EPZ1fQZWpOxkZO3k5FOvvDK9d++6hx7qc9mlxcXj+/d/fvDg1cuXWztbhcQ9XcpORh7ftetP771378aNA15/cWHh73v3nvjoo0ZPVbOJEJ7t+gwsQ9nJRq/37L59zx08eNd99w1+013r1//m+efvmJz8+siRsLTU3OmqJe4pUnZy0Vuz5i+HD/9u9+5erzf0vb3epu3bH9y69eQnn+h7dOKeHGUnI394663fvvTSOAsPb9u2Zu3ar48ciXUkrhP3tCg7GXl8164/Hzgw/s6mHTsW5+e/PXly/Clu8D33hCg7GVk7OfnHd9+NMtXr9Z47cOCOdeuirHGduKdC2cnLU6++et/UVKy1ezdu/P3LL8daI4h7IpSdvPQmJqZfey3u5vTevb2JibibNRP37ik72dm0fXv/XyqN4FePPDI1PR13s2bi3jFlJ0dbd+5sYvaxZmbrJO5dUnYyNTUzk9FsncS9M8pOvjZs3tzE7ANbtjQxWydx74ayk7W71q9vYvbu++9vYrZO4t4BZQeaJu5tU3YK8MOFC03MXvn++yZm6yTurVJ2yvDd6dONzH75ZROzdRL39ig7xViYm2ti9kwzs3US95YoOyU5NTvbxOx/m5mtk7i3QdkpzMKxY5cWF+NuXjp37uxnn8XdrJm4N07ZKc/StWvH9++Puzn3zjtLP/4Yd7Nm4t4sZadUn7///oUzZ2KtXTx79j8ffhhrjSDujVJ2Cnb1ypV/vP76UozH4y0tLX26Z8/Vy5fHn+IGT2JqirJTvP+dODFx552P7tgx5s6/3nzzi0OHohyJG8S9EcpOJb45evTBrVsf3rZt5IX5w4c/3bPHA7KjE/f4lJ2KLC2d+PjjXgiPPvNMr9cb8talY2+//bfdu32O2gRxj0zZqdA3R48uzs9PTU8P/odiF86cmX3xxX9/8IHX7A0R95iUnWp9e/LkF4cO/XDx4q+feOLOe+7pc+Wlc+f++cYbf33hhcX5+daOV6FeCPu6PkMhlB1CCL01a6ZmZh7buXNqZuaBLVvu3rAhhHDl/PnvTp9emJs7NTt79vhx78O0QNzjUHYgKb7nHoGyA6kR93EpO5AgcR+LsgNpEvfRKTuQLHEfkbIDKRP3USg7kDhxH5qyA+kT9+EoO5AFcR+CsgO5EPdBKTuQEXEfiLIDeRH31Sk7kB1xX4WyAzkS936UHciUuK9I2YF8ifvylB3ImrgvQ9mB3In7rZQdKIC4/4KyA2UQ958pO1AMcf+JsgMlEfcQlB0ojrgrO1Cg2uOu7ECRqo67sgOlqjfuyg4UrNK4KztQthrjruxA8aqLu7IDNagr7soOVKKiuCs7UI9a4q7sQFWqiLuyA7UpP+7KDlSo8LgrO1CnkuOu7EC1io27sgM1KzPuyg5UrsC4KztAaXFXdoBQWNyVHeC6cuKu7AA3FBJ3ZQe4WQlxV3aAW2Qfd2UHuF3ecVd2gGVlHHdlB1hJrnFXdoA+soy7sgP0l1/clR1gVZnFXdkBBpFT3JUdYEDZxF3ZAQaXR9yVHWAoGcRd2QGGlXrclR1gBEnHXdkBRpNu3JUdYGSJxl3ZAcaRYtyVHWBMycVd2QHGl1bclR0gioTiruwAsaQSd2UHiCiJuCs7QFzdx13ZAaLrOO7KDtCELuOu7AAN6Szuyg7QnG7iruwAjeog7soO0LS2467sAC1oNe7KDtCO9uKu7ACtaSnuyg7QpjbiruwALWs87soO0L5m467sAJ1oMO7KDtCVpuKu7AAdaiTuyg7QrfhxV3aAzkWOu7IDpCBm3JUdIBHR4q7sAOmIE3dlB0hKhLgrO0Bqxo27sgMkaKy4KztAmkaPu7IDJGvEuCs7QMpGibuyAyRu6LgrO0D6hou7sgNkYYi4KztALgaNu7IDZGSguCs7QF5Wj7uyA2RnlbgrO0CO+sVd2QEytWLclR0gX8vHXdkBsrZM3JUdIHe3xl3ZAQrwi7grO0AZfo67sgMU46e4KztASdYEZQcozsSTISg7QGH+H9yTtLIBTqk4AAAAAElFTkSuQmCC" /> </p>
+
+<HR />
+<div class="footer"><p>
+Published from <a href></a> using
+<a href="http://github.com/mpastell/Weave.jl">Weave.jl</a> v0.10.10 on 2021-11-20.
+<p></div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

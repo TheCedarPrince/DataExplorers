@@ -1,0 +1,235 @@
+# Voronoi Diagrams
+
+## Auxiliary Helper Functions
+
+Defining helper functions for Voronoi computations:
+
+### Mathematical Operations
+
+#### Calculating Slope between Two Points
+
+Calculating the slope given two points:
+
+$$m = \frac{y_{2} - y_{1}}{x_{2} - x_{1}}$$
+
+Where $P_{1} = (x_{1}, y_{1})$ is a first point and $P_{2} = (x_{2}, y_{2})$ is a second point.
+
+```julia
+slope(x₁, y₁, x₂, y₂) = (y₂ - y₁) / (x₂ - x₁)
+slope(P1, P2) = (P2.y - P1.y) / (P2.x - P1.x)
+```
+
+#### Calculating Midpoint between Two Points
+
+Calculating the midpoint given two points:
+
+$$M = (\frac{x_{1} + x_{2}}{2}, \frac{y_{1} + y_{2}}{2})$$
+
+Where $P_{1} = (x_{1}, y_{1})$ is a first point and $P_{2} = (x_{2}, y_{2})$ is a second point.
+
+```julia
+midpoint(x₁, y₁, x₂, y₂) = ((x₁ + x₂) / 2, (y₁ + y₂) / 2)
+midpoint(P1, P2) = ((P1.x + P2.x) / 2, (P2.y + P2.y) / 2)
+```
+
+#### Point Slope Form
+
+$$y - y_{1} = m(x - x_{1})$$
+
+```julia
+point_slope(x, x₁, y₁, m) = (x, m * (x - x₁) + y₁)
+```
+
+### Luxor Helper 
+
+Make the Luxor drawing background:
+
+```julia
+using Luxor
+
+function make_drawing(width, height, img_path, bkg_color, origin_p)
+    d = Drawing(width, height, img_path)
+    background(bkg_color)
+    origin(origin_p)
+    return d
+end
+```
+
+## Case: One Seed Voronoi
+
+This explores the case of one seed in a Voronoi diagram.
+First the set up of the diagram as follows:
+
+```julia
+width = 500
+height = 500
+path = "voronoi_1.png"
+color = "black"
+make_drawing(width, height, path, color, Point(0, 0))
+```
+
+Then we can place the seed for the one cell case:
+
+```julia
+center = Point(width / 2, height / 2)
+seeds = [center]
+
+sethue("red")
+circle(seeds[1], 15; action = :fill)
+```
+
+Extract Voronoi regions:
+
+```julia
+if length(seeds) == 1
+	setcolor(1, 0, 0, 0.4)
+	v_region = box(seeds[1], width, height; action = :fill)
+end
+```
+
+Finalize diagram:
+
+```julia
+finish()
+readpng("voronoi_1.png")
+```
+
+## Case: Two Seed Voronoi 
+
+This explores the case of one seed in a Voronoi diagram.
+First the set up of the diagram as follows:
+
+```julia
+width = 500
+height = 500
+path = "voronoi_2.png"
+color = "black"
+make_drawing(width, height, path, color, Point(250, 250))
+```
+
+Then we can place the seeds for the two cell case:
+
+```julia
+p1 = Point(125, 0)
+p2 = Point(-125, 0)
+seeds = [p1, p2]
+
+sethue("red")
+
+for seed in seeds
+	circle(seed, 15; action = :fill)
+end
+```
+
+Extract Voronoi regions:
+
+```julia, eval = true
+sethue("white")
+line(p1, p2; action = :stroke)
+```
+
+```julia, eval = true
+mp = midpoint(p1.x, p1.y, p2.x, p2.y) |> Point
+sp = slope(p1.x, p1.y, p2.x, p2.y)
+first_point = point_slope(-250, mp.x, mp.y, -1 / sp) |> Point
+second_point = point_slope(250, mp.x, mp.y, -1 / sp) |> Point
+```
+
+```julia, eval = true
+setcolor(1, 0, 0, 0.4)
+b1 = BoundingBox(Point(-250, 250), Point(0, -250))
+box(Point(-250, 250), Point(0, -250); action = :fill)
+```
+
+```julia, eval = true
+setcolor(0, 0, 1, 0.4)
+b2 = BoundingBox(Point(250, 250), Point(0, -250)) 
+box(Point(250, 250), Point(0, -250); action = :fill)
+```
+
+Midpoint line:
+
+```julia, eval = true
+setcolor(1, 1, 0, 1)
+setline(10)
+line(Point(0, 250), Point(0, -250); action = :stroke)
+```
+
+```julia, eval = true
+setcolor(0, 1, 0, 1)
+setline(10)
+line(Point(-250, 250), Point(-250, -250); action = :stroke)
+line(Point(250, 250), Point(250, -250); action = :stroke)
+```
+
+```julia, eval = true
+setcolor(1, 0, 0, 1)
+setline(10)
+line(Point(-250, -250), Point(0, -250); action = :stroke)
+line(Point(0, -250), Point(250, -250); action = :stroke)
+```
+
+```julia, eval = true
+setcolor(1, 0, 1, 1)
+setline(10)
+line(Point(-250, 250), Point(0, 250); action = :stroke)
+line(Point(0, 250), Point(250, 250); action = :stroke)
+```
+
+```julia, eval = true
+voronoi_edges = [(start_point = Point(0, 250), end_point = Point(0, -250))]
+```
+
+Finalize diagram:
+
+```julia
+finish()
+readpng("voronoi_2.png")
+```
+
+## Case: `n`-Seed Voronoi 
+
+```julia
+width = 500
+height = 500
+path = "voronoi_3.png"
+color = "black"
+make_drawing(width, height, path, color, Point(250, 250))
+```
+
+```julia, eval = true
+function half_plane(p1, p2, width, height)
+
+    mp = midpoint(p1.x, p1.y, p2.x, p2.y) |> Point
+    sp = slope(p1.x, p1.y, p2.x, p2.y)
+    first_point = point_slope(-250, mp.x, mp.y, sp == 0 ? 0 : -1 / sp) |> Point
+    second_point = point_slope(250, mp.x, mp.y, sp == 0 ? 0 : -1 / sp) |> Point
+
+    half_1 = [first_point, second_point, Point(width / 2, height / 2)]
+    half_2 = [first_point, second_point, Point(-width / 2, -height / 2)]
+
+    return half_1, half_2
+end
+```
+
+```julia, eval = true
+p1 = Point(125, 125)
+p2 = Point(-125, -125)
+
+half_1, half_2 = half_plane(p1, p2, 500, 500) 
+
+setcolor(1, 0, 0, 0.5)
+poly(half_1; action = :fill)
+
+setcolor(0, 0, 1, 0.5)
+poly(half_2; action = :fill)
+
+setcolor(1, 1, 1, 1)
+circle(p1, 15; action = :fill)
+circle(p2, 15; action = :fill)
+```
+
+```julia
+finish()
+readpng("voronoi_3.png")
+```
